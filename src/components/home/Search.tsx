@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {View, TextInput, StyleSheet, Text} from "react-native";
 import SearchResult from "./SearchResult";
 
-export default function Search() {
+export default function SearchScreen() {
     const [searchValue, setSearchValue] = useState("");
     return (
         <View style={style.container}>
