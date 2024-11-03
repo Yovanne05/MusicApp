@@ -6,20 +6,12 @@ import { SafeAreaView } from "react-native";
 import SearchScreen from "./(tabs)/search/SearchScreen";
 import PlaylistsScreen from "./(tabs)/playlists/PlaylistsScreen";
 import MusicPlayer from "./(tabs)/musicplayer/MusicPlayer";
+import TrackPlayer from "react-native-track-player";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function Tabs() {
-    const [defaultSong] = useState({
-        id: 0,
-        title: "Default Song",
-        artists: "Default Artist",
-        url: "default",
-        duration: 180,
-        artworks: "default"
-    });
-
     return (
         <Tab.Navigator
             screenOptions={{
@@ -30,16 +22,17 @@ function Tabs() {
         >
             <Tab.Screen name="Search" component={SearchScreen} options={{ headerShown: false }} />
             <Tab.Screen name="Playlists" component={PlaylistsScreen} options={{ headerShown: false }} />
-            <Tab.Screen
-                name="Player"
-                options={{ headerShown: false }}
-                children={() => <MusicPlayer song={defaultSong} />}
-            />
+            <Tab.Screen name="Player" component={MusicPlayer} options={{ headerShown: false }} />
         </Tab.Navigator>
     );
 }
 
+const setup = async () => {
+    await TrackPlayer.setupPlayer();
+}
+
 export default function App() {
+    setup();
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <NavigationContainer>
