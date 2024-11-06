@@ -3,17 +3,16 @@ import {View, Text, ScrollView, Button, StyleSheet, ActivityIndicator} from "rea
 import library from "../../data/library.json";
 import TrackPlayer, {State} from "react-native-track-player";
 import {songs} from '../../interfaces/songs';
+import { useMusic } from '../../app/(tabs)/provider/MusicContext';
 
 function SearchResult({search}: { search: string }) {
-    const [selectedSong, setSelectedSong] = useState<songs | null>(null);
+    const { setSong, actualSong } = useMusic()
     const [playerState, setPlayerState] = useState<State>(State.None);
-    const [loading, setLoading] = useState<boolean>(true); // Loading state
 
     useEffect(() => {
         const checkPlayerState = async () => {
             const state = await TrackPlayer.getState();
             setPlayerState(state);
-            setLoading(false);
         };
 
         checkPlayerState();
@@ -21,9 +20,9 @@ function SearchResult({search}: { search: string }) {
 
     const play = async (song: songs) => {
         try {
-            setSelectedSong(song);
-            if (selectedSong) {
-                if (selectedSong.id === song.id) {
+            setSong(song);
+            if (actualSong) {
+                if (actualSong?.url === song.url) {
                     await togglePlayPause();
                 } else {
                     // Load a new track
@@ -88,7 +87,7 @@ function SearchResult({search}: { search: string }) {
                                     <Text style={styles.tile}>{value.title}</Text>
                                     <Text style={styles.artist}>{value.artist}</Text>
                                     <Button
-                                        title={playerState === State.Playing && selectedSong?.id === value.id ? "Pause" : "Play"}
+                                        title={playerState === State.Playing && actualSong?.url === value.url ? "Pause" : "Play"}
                                         onPress={() => play(value)}
                                     />
                                 </View>

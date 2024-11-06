@@ -1,5 +1,4 @@
-import TrackPlayer from "react-native-track-player";
-import {Button, Text, View} from "react-native";
+import {View} from "react-native";
 import React from "react";
 import Search from "../../../components/home/Search";
 import {defaultStyles} from "../../../style";

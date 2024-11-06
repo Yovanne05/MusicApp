@@ -1,51 +1,35 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useState, useEffect } from "react";
-import { defaultStyles } from "../../../style";
-import { songs } from "../../../interfaces/songs";
-import TrackPlayer, {Track} from 'react-native-track-player';
+import React from 'react';
+import {View, Text, StyleSheet, Image} from 'react-native';
+import { useMusic } from '../provider/MusicContext';
+import {unknownTrackImageUri} from "../../../constants/Image";
 
-function MusicPlayer() {
-    const [actualSong, setSong] = useState<Track>({
-        url: "default",
-        artist: "default",
-        id: 0,
-        title: "Default Song",
-        artwork: "Default Artwork",
-    });
+const MusicPlayer = () => {
+    const { actualSong } = useMusic();
 
-    useEffect(() => {
-        const fetchCurrentTrack = async () => {
-            const trackId = await TrackPlayer.getCurrentTrack();
-            if (trackId !== null) {
-                const track = await TrackPlayer.getTrack(trackId);
-                if (track) {
-                    setSong(track);
-                }
-            }
-        };
-        fetchCurrentTrack();
-    }, []);
+    if (!actualSong) {
+        return <Text>No song selected</Text>;
+    }
 
     return (
-        <View style={defaultStyles.container}>
-            <View style={styles.container}>
-                <View style={styles.imageContainer}></View>
-                <Text style={styles.title}>{actualSong.title}</Text>
-                <Text style={styles.artist}>{actualSong.artist}</Text>
-            </View>
+        <View style={styles.container}>
+            <Image
+                style={styles.imageContainer}
+                source={{
+                    uri: typeof actualSong.artwork === 'string' ? actualSong.artwork : unknownTrackImageUri,
+                }}
+            />
+            <Text style={styles.title}>{actualSong.title}</Text>
+            <Text style={styles.artist}>{actualSong.artist}</Text>
         </View>
     );
-}
-
-export default MusicPlayer;
+};
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: "center",
-        justifyContent: "flex-start",
-        paddingTop: 80,
-        backgroundColor: "#000000",
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#000',
     },
     imageContainer: {
         marginBottom: 15,
@@ -54,13 +38,13 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     title: {
-        fontSize: 18,
-        color: "#ffffff",
-        marginTop: 20,
+        color: '#fff',
+        fontSize: 20,
     },
     artist: {
+        color: '#ccc',
         fontSize: 16,
-        color: "#555",
-        marginTop: 5,
     },
 });
+
+export default MusicPlayer;
