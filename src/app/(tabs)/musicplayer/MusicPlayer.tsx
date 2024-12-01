@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, Button} from 'react-native';
 import { useMusic } from '../provider/MusicContext';
 import {unknownTrackImageUri} from "../../../constants/Image";
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const MusicPlayer = () => {
     const { actualSong } = useMusic();
@@ -20,6 +21,12 @@ const MusicPlayer = () => {
             />
             <Text style={styles.title}>{actualSong.title}</Text>
             <Text style={styles.artist}>{actualSong.artist}</Text>
+            <View style={styles.containerIcon}>
+                <AntDesign name='stepbackward' style={{color : '#fff', fontSize:40}}/>
+                <AntDesign name='caretright' style={{color : '#fff', fontSize:40}}/>
+                <AntDesign name='stepforward' style={{color : '#fff', fontSize:40}}/>
+            </View>
+
         </View>
     );
 };
@@ -30,6 +37,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#000',
+    },
+    containerIcon : {
+        marginTop:80,
+        flexDirection: 'row',
     },
     imageContainer: {
         marginBottom: 15,

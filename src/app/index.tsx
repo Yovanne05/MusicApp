@@ -8,6 +8,9 @@ import PlaylistsScreen from "./(tabs)/playlists/PlaylistsScreen";
 import MusicPlayer from "./(tabs)/musicplayer/MusicPlayer";
 import TrackPlayer from "react-native-track-player";
 import {MusicProvider} from "./(tabs)/provider/MusicContext";
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -21,8 +24,8 @@ function Tabs() {
                 tabBarInactiveTintColor: '#888888'
             }}
         >
-            <Tab.Screen name="Search" component={SearchScreen} options={{headerShown: false}}/>
-            <Tab.Screen name="Playlists" component={PlaylistsScreen} options={{headerShown: false}}/>
+            <Tab.Screen name="Search" component={SearchScreen} options={{headerShown: false, tabBarIcon : () => (<FontAwesome name='search' style={{fontSize:25, color: '#fff'}}/>)}}/>
+            <Tab.Screen name="Playlists" component={PlaylistsScreen} options={{headerShown: false, tabBarIcon : () => (<MaterialIcons name='library-music' style={{fontSize:25, color: '#fff'}}/>)}}/>
             <Tab.Screen name="Player" component={MusicPlayer} options={{headerShown: false}}/>
         </Tab.Navigator>
     );
