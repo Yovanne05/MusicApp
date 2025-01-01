@@ -1,0 +1,14 @@
+[
+  {
+    "id": "1",
+    "name": "Chill Vibes",
+    "description": "Relax and unwind with these chill tracks.",
+    "songs": ["1", "5", "8", "15"]
+  },
+  {
+    "id": "2",
+    "name": "Workout Beats",
+    "description": "High-energy tracks to fuel your workouts.",
+    "songs": ["2", "7", "6", "11"]
+  }
+]
